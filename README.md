@@ -98,7 +98,3 @@ Frontend runs on `http://localhost:5173`
 - Refresh tokens are stored as SHA-256 hashes in the database, never in plaintext
 - Refresh tokens use httpOnly, sameSite=strict cookies — inaccessible to JavaScript, protecting against XSS and CSRF
 - Access tokens are never stored in cookies, avoiding CSRF on protected API calls
-
-## License
-
-MIT
