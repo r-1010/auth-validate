@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         // via window.location.href — causing a full page reload
         // that re-triggers this exact function = infinite loop.
         const refreshResponse = await axios.post(
-          'http://localhost:5000/api/auth/refresh',
+          `${import.meta.env.VITE_API_URL}/auth/refresh`,
           {},
           { withCredentials: true }
         );

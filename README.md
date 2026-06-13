@@ -64,21 +64,21 @@ Frontend runs on `http://localhost:5173`
 
 ### Auth Routes (`/api/auth`)
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|----------------|
-| POST | `/register` | Create a new account | No |
-| POST | `/login` | Log in, receive access token + refresh cookie | No |
-| POST | `/refresh` | Get a new access token using refresh cookie | No (cookie) |
-| POST | `/logout` | Invalidate session | No |
+| Method | Endpoint    | Description                                   | Auth Required |
+| ------ | ----------- | --------------------------------------------- | ------------- |
+| POST   | `/register` | Create a new account                          | No            |
+| POST   | `/login`    | Log in, receive access token + refresh cookie | No            |
+| POST   | `/refresh`  | Get a new access token using refresh cookie   | No (cookie)   |
+| POST   | `/logout`   | Invalidate session                            | No            |
 
 ### User Routes (`/api/users`)
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|----------------|
-| GET | `/test` | Sanity check | No |
-| GET | `/profile` | Get logged-in user's profile | Yes |
-| GET | `/dashboard` | Get dashboard data | Yes |
-| GET | `/admin` | Admin-only data | Yes (admin role) |
+| Method | Endpoint     | Description                  | Auth Required    |
+| ------ | ------------ | ---------------------------- | ---------------- |
+| GET    | `/test`      | Sanity check                 | No               |
+| GET    | `/profile`   | Get logged-in user's profile | Yes              |
+| GET    | `/dashboard` | Get dashboard data           | Yes              |
+| GET    | `/admin`     | Admin-only data              | Yes (admin role) |
 
 ## How the Token System Works
 
