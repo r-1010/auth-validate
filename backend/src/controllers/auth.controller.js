@@ -15,10 +15,13 @@ const {
 
 const setRefreshTokenCookie = (res, token) => {
     res.cookie('refreshToken', token, {
-        httpOnly: true,   // JavaScript cannot read this cookie — blocks XSS attacks
-        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
-        sameSite: 'strict', // cookie only sent to same site — blocks CSRF attacks
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+        httpOnly: true,
+        // 'none' is required for cross-site cookies (frontend and backend
+        // on different domains). Browsers REQUIRE secure: true whenever
+        // sameSite is 'none' — cookies won't be set otherwise.
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 };
 
@@ -259,7 +262,7 @@ exports.logout = async (req, res) => {
         res.clearCookie('refreshToken', {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         });
 
         res.status(200).json({ message: 'Logged out successfully.' });
