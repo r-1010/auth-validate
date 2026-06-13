@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import api from '../api/axios';
+import axios from 'axios';
 
 // ----------------------------------------
 // Create the context
@@ -44,10 +45,18 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const restoreSession = async () => {
       try {
-        // Attempt to get a new access token using the refresh cookie.
-        // If the cookie doesn't exist or is expired this will throw
-        // and we'll land in the catch block — user stays logged out.
-        const refreshResponse = await api.post('/auth/refresh');
+        // Use plain axios here — NOT the `api` instance.
+        // This call is EXPECTED to fail with 401 if there's no
+        // valid refresh cookie (e.g. first visit, logged out).
+        // If we used `api`, the response interceptor would catch
+        // that 401, try to refresh AGAIN, fail AGAIN, and redirect
+        // via window.location.href — causing a full page reload
+        // that re-triggers this exact function = infinite loop.
+        const refreshResponse = await axios.post(
+          'http://localhost:5000/api/auth/refresh',
+          {},
+          { withCredentials: true }
+        );
         const newAccessToken = refreshResponse.data.accessToken;
 
         // Save the new access token
